@@ -46,7 +46,7 @@ class HomePage extends StatelessWidget {
             } else {
               return const LoginView();
             }
-            return const Text("Done");
+            return const LoginView(); // Text("Done"); (while working on view UIs)
           default:
             return const CircularProgressIndicator();
         }

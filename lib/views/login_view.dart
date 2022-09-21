@@ -29,60 +29,106 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blueGrey[100],
       body: SafeArea(
-        child: Column(
-          children: [
-            //email
-            TextField(
-              controller: _email,
-              enableSuggestions: false,
-              autocorrect: false,
-              keyboardType: TextInputType.emailAddress,
-              decoration: const InputDecoration(
-                hintText: 'Enter your email',
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //title, welcome text
+              const Padding(
+                padding: EdgeInsets.all(10.0),
+                child: Text(
+                  "Flutsuba",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 42,
+                  ),
+                ),
               ),
-            ),
-            //password
-            TextField(
-              controller: _password,
-              obscureText: true,
-              enableSuggestions: false,
-              autocorrect: false,
-              decoration: const InputDecoration(
-                hintText: 'Enter your password',
+              const SizedBox(height: 25),
+              //email
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey[50],
+                    border: Border.all(color: Colors.blueGrey),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: TextField(
+                      controller: _email,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Enter your email',
+                      ),
+                    ),
+                  ),
+                ),
               ),
-            ),
-            TextButton(
-              onPressed: () async {
-                final email = _email.text;
-                final password = _password.text;
-                try {
-                  final userCredential =
-                      FirebaseAuth.instance.signInWithEmailAndPassword(
-                    email: email,
-                    password: password,
-                  );
-                  print(userCredential);
-                } on FirebaseAuthException catch (e) {
-                  if (e.code == 'user-not-found') {
-                    print('User not found');
-                  } else if (e.code == 'wrong-password') {
-                    print('Wrong password');
+              const SizedBox(height: 25),
+              //password
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.blueGrey[50],
+                    border: Border.all(color: Colors.blueGrey),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15.0),
+                    child: TextField(
+                      controller: _password,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Enter your password',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 30),
+              ElevatedButton(
+                onPressed: () async {
+                  final email = _email.text;
+                  final password = _password.text;
+                  try {
+                    final userCredential =
+                        FirebaseAuth.instance.signInWithEmailAndPassword(
+                      email: email,
+                      password: password,
+                    );
+                    print(userCredential);
+                  } on FirebaseAuthException catch (e) {
+                    if (e.code == 'user-not-found') {
+                      print('User not found');
+                    } else if (e.code == 'wrong-password') {
+                      print('Wrong password');
+                    }
                   }
-                }
-              },
-              child: const Text("Login"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  '/register/',
-                  (route) => false,
-                );
-              },
-              child: const Text('Not registered? Register here!'),
-            )
-          ],
+                },
+                child: const Text("Log In"),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    '/register/',
+                    (route) => false,
+                  );
+                },
+                child: const Text('Not registered? Register here!'),
+              )
+            ],
+          ),
         ),
       ),
     );
