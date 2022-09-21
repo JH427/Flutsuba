@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "192832049593",
+    "project_id": "flutsuba",
+    "storage_bucket": "flutsuba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192832049593:android:49eb2fddb0ac073f336668",
+        "android_client_info": {
+          "package_name": "lol.hellointernet.flutsuba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192832049593-n4gkr843j1r1tb704bm2ck3dv0ijvagv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYjU3FiNZayStcNaxuIcuOavD-zlIrvhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192832049593-n4gkr843j1r1tb704bm2ck3dv0ijvagv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
