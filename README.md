@@ -22,3 +22,4 @@ However, when posting users should have levels of anonymity
 - post publicly, identity is shared with other users
 
 The number of max threads should start small and scale, same with replies
+- max threads/replies per user (unless VIP) ?
