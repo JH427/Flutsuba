@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutsuba/constants/routes.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer' as dev show log;
 
@@ -109,7 +110,7 @@ class _RegisterViewState extends State<RegisterView> {
                       password: password,
                     );
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      '/verifyemail/',
+                      verifyEmailRoute,
                       (route) => false,
                     );
                   } on FirebaseAuthException catch (e) {
@@ -127,7 +128,7 @@ class _RegisterViewState extends State<RegisterView> {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login/',
+                    loginRoute,
                     (route) => false,
                   );
                 },
