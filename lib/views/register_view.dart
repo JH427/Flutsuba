@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer' as dev show log;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -107,14 +108,17 @@ class _RegisterViewState extends State<RegisterView> {
                       email: email,
                       password: password,
                     );
-                    print(userCredential);
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      '/verifyemail/',
+                      (route) => false,
+                    );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'weak-password') {
-                      print("Weak Password");
+                      dev.log("Weak Password");
                     } else if (e.code == 'email-already-in-use') {
-                      print('Email already in use');
+                      dev.log('Email already in use');
                     } else if (e.code == 'invalid-email') {
-                      print('Invalid email');
+                      dev.log('Invalid email');
                     }
                   }
                 },
@@ -127,7 +131,7 @@ class _RegisterViewState extends State<RegisterView> {
                     (route) => false,
                   );
                 },
-                child: Text('Already registered? Login here!'),
+                child: const Text('Already registered? Login here!'),
               ),
             ],
           ),

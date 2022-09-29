@@ -14,17 +14,19 @@ void main() {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const HomePage(),
+      home: const LoginController(),
       routes: {
         '/login/': (context) => const LoginView(),
         '/register/': (context) => const RegisterView(),
+        '/verifyemail/': (context) => const VerifyEmailView(),
+        '/nav/': (context) => const NavigationView(),
       },
     ),
   );
 }
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class LoginController extends StatelessWidget {
+  const LoginController({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +38,75 @@ class HomePage extends StatelessWidget {
         switch (snapshot.connectionState) {
           case ConnectionState.done:
             final user = FirebaseAuth.instance.currentUser;
-            print(user);
             if (user != null) {
               if (user.emailVerified) {
-                print("Email verified");
+                return const NavigationView();
               } else {
                 return const VerifyEmailView();
               }
             } else {
               return const LoginView();
             }
-            return const RegisterView(); // Text("Done"); (while working on view UIs)
           default:
-            return const CircularProgressIndicator();
+            return const Scaffold(
+                body: Center(
+              child: CircularProgressIndicator(),
+            ));
         }
       },
+    );
+  }
+}
+
+class NavigationView extends StatefulWidget {
+  const NavigationView({Key? key}) : super(key: key);
+
+  @override
+  State<NavigationView> createState() => _NavigationViewState();
+}
+
+class _NavigationViewState extends State<NavigationView> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.blueGrey[100],
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text("[Home]"),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text("[Settings]"),
+                  ),
+                ),
+                Expanded(
+                  child: TextButton(
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      if (!mounted) return;
+                      Navigator.of(context)
+                          .pushNamedAndRemoveUntil('/login/', (_) => false);
+                    },
+                    child: const Text("[Logout]"),
+                  ),
+                ),
+              ],
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 35.0),
+              child: Text("test"),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
