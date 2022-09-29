@@ -104,14 +104,11 @@ class _RegisterViewState extends State<RegisterView> {
                   final email = _email.text;
                   final password = _password.text;
                   try {
+                    // ignore: unused_local_variable
                     final userCredential =
                         FirebaseAuth.instance.createUserWithEmailAndPassword(
                       email: email,
                       password: password,
-                    );
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      verifyEmailRoute,
-                      (route) => false,
                     );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'weak-password') {
@@ -122,6 +119,18 @@ class _RegisterViewState extends State<RegisterView> {
                       dev.log('Invalid email');
                     }
                   }
+                  FirebaseAuth.instance
+                      .authStateChanges()
+                      .listen((User? userCredential) {
+                    if (userCredential == null) {
+                      dev.log('authStateChanges user is null');
+                    } else {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        verifyEmailRoute,
+                        (route) => false,
+                      );
+                    }
+                  });
                 },
                 child: const Text("Register"),
               ),

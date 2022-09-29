@@ -104,23 +104,12 @@ class _LoginViewState extends State<LoginView> {
                   final email = _email.text;
                   final password = _password.text;
                   try {
+                    // ignore: unused_local_variable
                     final userCredential =
                         FirebaseAuth.instance.signInWithEmailAndPassword(
                       email: email,
                       password: password,
                     );
-                    FirebaseAuth.instance
-                        .authStateChanges()
-                        .listen((User? userCredential) {
-                      if (userCredential == null) {
-                        dev.log('User signed out');
-                      } else {
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                          navigationRoute,
-                          (route) => false,
-                        );
-                      }
-                    });
                   } on FirebaseAuthException catch (e) {
                     if (e.code == 'user-not-found') {
                       dev.log('User not found');
@@ -128,6 +117,18 @@ class _LoginViewState extends State<LoginView> {
                       dev.log('Wrong password');
                     }
                   }
+                  FirebaseAuth.instance
+                      .authStateChanges()
+                      .listen((User? userCredential) {
+                    if (userCredential == null) {
+                      dev.log('authStateChanges user is null');
+                    } else {
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        navigationRoute,
+                        (route) => false,
+                      );
+                    }
+                  });
                 },
                 child: const Text("Log In"),
               ),
